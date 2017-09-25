@@ -25,11 +25,9 @@ from subprocess import call
 class SaltProcessingHook(base.ProcessingHook):  # pragma: no cover
     def before_processing(self, introspection_data, **kwargs):
         LOG.debug('before_processing: %s', introspection_data)
-#        caller.cmd('event.send', 'myco/myevent/something', data={'foo': 'Foo'}, with_env=['GIT_COMMIT'], with_grains=True)
-#        caller.cmd('event.send', 'ironic-inspector/discovery', introspection_data
         discovery_data={"discovery": introspection_data}
         LOG.debug(discovery_data)
-        call(["sudo", "salt-call", "event.send", "foo", json.dumps(discovery_data)])
+        call(["sudo", "salt-call", "event.send", "ironic/discovery", json.dumps(discovery_data)])
         LOG.debug('done')
 
     def before_update(self, introspection_data, node_info, **kwargs):
@@ -51,8 +49,7 @@ def main():
 
   test_data={"discovery": data_data}
   discovery_data="{discovery: sss"+"}"
-  call(["sudo", "salt-call", "event.send", "foo", json.dumps(test_data)])
-  print discovery_data
+  call(["sudo", "salt-call", "event.send", "ironic/discovery", json.dumps(test_data)])
   
 
 
